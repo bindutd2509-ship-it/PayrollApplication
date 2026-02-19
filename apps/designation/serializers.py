@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import AbleDesignation
+from .models import Designation
 
 
-class AbleDesignationSerializer(serializers.ModelSerializer):
+class DesignationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AbleDesignation
+        model = Designation
         fields = '__all__'
