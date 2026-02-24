@@ -75,18 +75,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "payroll_db",
-        "USER": "root",
+        "NAME": "payroll_db",      # your DB name
+        "USER": "root",            # your MySQL user
         "PASSWORD": "root",
-        "HOST": "localhost",
+        "HOST": "127.0.0.1",
         "PORT": "3306",
-        "OPTIONS": {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
     }
 }
 
