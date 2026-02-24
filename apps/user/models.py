@@ -1,10 +1,10 @@
 import uuid
 from django.db import models
-from companies.models import Company
+from apps.companies.models import Company
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='users')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='user_accounts')
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(max_length=200, unique=True)
     mobile = models.CharField(max_length=20)
@@ -18,4 +18,4 @@ class User(models.Model):
         return f"{self.username} ({self.company.name})"
 
     class Meta:
-        db_table = 'users'
+        db_table = 'user_profiles'
