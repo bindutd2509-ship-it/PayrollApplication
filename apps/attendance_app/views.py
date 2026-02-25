@@ -1,19 +1,49 @@
 from rest_framework import generics
-from .models import Attendance
-from .serializers import AttendanceSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Shift, OfficeLocation, Attendance
+from .serializers import ShiftSerializer, OfficeLocationSerializer, AttendanceSerializer
 
 
-class EmployeeAttendanceListAPIView(generics.ListAPIView):
+class ShiftListCreateView(generics.ListCreateAPIView):
+    queryset = Shift.objects.all()
+    serializer_class = ShiftSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['company']
+
+
+class ShiftDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Shift.objects.all()
+    serializer_class = ShiftSerializer
+    lookup_field = 'pk'
+
+
+class OfficeLocationListCreateView(generics.ListCreateAPIView):
+    queryset = OfficeLocation.objects.all()
+    serializer_class = OfficeLocationSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['company']
+
+
+class OfficeLocationDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = OfficeLocation.objects.all()
+    serializer_class = OfficeLocationSerializer
+    lookup_field = 'pk'
+
+
+class AttendanceListCreateView(generics.ListCreateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['company', 'employee', 'date', 'status']
+
+
+class AttendanceCheckInView(generics.CreateAPIView):
+    """Check-in endpoint: creates or updates today's attendance record."""
+    queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
 
-    def get_queryset(self):
-        employee_id = self.request.query_params.get("employee_id")
-        start_date = self.request.query_params.get("start_date")
-        end_date = self.request.query_params.get("end_date")
 
-        queryset = Attendance.objects.filter(employee_id=employee_id)
-
-        if start_date and end_date:
-            queryset = queryset.filter(date__range=[start_date, end_date])
-
-        return queryset
+class AttendanceDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+    lookup_field = 'pk'

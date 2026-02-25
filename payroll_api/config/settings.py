@@ -39,8 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "rest_framework",
+    "rest_framework_simplejwt",
     "django_filters",
-    "payroll",
+    "apps.core",
+    "apps.companies",
+    "apps.user",
+    "apps.organization",
+    "apps.employees",
+    "apps.payroll_formulas",
+    "apps.attendance_app",
+    "apps.leave_management",
+    "apps.payroll",
+    "apps.audit",
+    "apps.authentication",
 ]
 
 MIDDLEWARE = [
@@ -123,6 +134,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+AUTH_USER_MODEL = 'user.User'
+
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
